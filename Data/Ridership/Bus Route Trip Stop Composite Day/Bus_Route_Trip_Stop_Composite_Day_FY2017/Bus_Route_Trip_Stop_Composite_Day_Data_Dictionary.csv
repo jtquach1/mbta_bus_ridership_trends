@@ -1,0 +1,14 @@
+Field,Definition
+GTFS route_id,GTFS route_id for the bus route
+GTFS direction_id,"0 or 1; typically 0 indicates outbound, 1 indicates inbound"
+Trip Start Time,scheduled start time for the trip
+Stop Name,GTFS stop name for the stop
+GTFS stop_id,GTFS stop_id for the stop
+Stop Sequence,"GTFS stop_sequence for the stop for this trip; Every trip on each route has been exported with the same stop sequence. However, not every trip serves every stop in that sequence due to the different variants. Stop sequences are not guaranteed to match the stop sequence in the GTFS stop times file for the trips starting at that time due to changes in operations throughout the fiscal year."
+Year,"Fiscal Year, e.g. FY2016"
+Day Type,"Weekday, Saturday, or Sunday; holidays are excluded from the data"
+Boardings,"Average daily boardings by fiscal year for each bus route, direction, trip, stop, and day type"
+Alightings,"Average daily alightings by fiscal year for each bus route, direction, trip, stop, and day type"
+Load,"Average daily load from this stop (after taking into account boardings and alightings) by fiscal year for each bus route, direction, trip, and day type"
+Route_Variant,Named variant for the trip
+Samples,The number of times the trip was sampled by a bus with Automatic Passenger Counters (APCs) and met validity criteria. It does not always equal the number of samples for each stop.
