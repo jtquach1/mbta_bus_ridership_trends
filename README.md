@@ -29,6 +29,7 @@ avg = by(b$Boardings,
          list(direction = b$GTFS.direction_id, 
               start.time = time_axis, 
               Year = b$Year), FUN = sum, na.rm = TRUE)
+...
 ## Get total number of alightings
 avg = by(b$Alightings, 
          list(direction = b$GTFS.direction_id, 
@@ -59,11 +60,6 @@ streets_only = C %>% filter(!str_detect(Stop.Name,
 # get everything that is a STATION, TERMINAL
 stations = C %>% filter(str_detect(Stop.Name, "STATION|SILVER LINE"))
 terminals = C %>% filter(str_detect(Stop.Name, "TERMINAL"))
-
-# take distinct elements to get rid of common 0 elements
-streets_only = distinct(streets_only)
-stations = distinct(stations)
-terminals = distinct(terminals)
 ```
 I also used distinct() before averaging to remove rows with 0’s in both boardings and alightings. This was for buses that had 0 passengers or were scheduled to operate at some time but did not. By getting rid of these rows, the ridership means won’t be dragged down by the “empty” entries. 
 ```R
