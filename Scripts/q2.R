@@ -15,39 +15,47 @@ require(gridExtra)
 
 ## $ is used to extract elements by name from a named list
 ## %>% is used to redirect left side as input to the right side
-## substring(x, first, last) 
+## substring(x, first, last)
+path = "C:/Users/jtqua/OneDrive/Documents/GitHub/mbta_bus_ridership_trends"
+setwd(path)
 
 ## Bus Route Direction Composite Day
-#setwd("~/GitHub/mbta_bus_ridership_trends/Data/Ridership/Bus Route Direction Composite Day/2017-2018")
-#brdcd <- list.files(pattern=".csv")
-#brdcd <- brdcd %>% map_dfr(read.csv)
+p1 = file.path(path, "Data/Ridership/Bus Route Direction Composite Day")
+setwd(p1)
+brdcd <- list.files(pattern=".csv")
+brdcd <- brdcd %>% map_dfr(read.csv)
 
 ## Bus Route Trip Stop Composite Day
-#setwd("~/GitHub/mbta_bus_ridership_trends/Data/Ridership/Bus Route Trip Stop Composite Day/2017-2018")
-#brtscd <- list.files(pattern=".csv")
-#brtscd1 <- read.csv(brtscd[1], header=T, fill=T)
-#brtscd2 <- read.csv(brtscd[2], header=T, fill=T)
+p2 = file.path(path, "Data/Ridership/Bus Route Trip Stop Composite Day")
+setwd(p2)
+brtscd <- list.files(pattern=".csv")
+brtscd1 <- read.csv(brtscd[1], header=T, fill=T)
+brtscd2 <- read.csv(brtscd[2], header=T, fill=T)
 
 ## Bus Stop Composite Day
-#setwd("~/GitHub/mbta_bus_ridership_trends/Data/Ridership/Bus Stop Composite Day/2017-2018")
-#bscd <- list.files(pattern=".csv")
-#bscd <- bscd %>% map_dfr(read.csv)
+p3 = file.path(path, "Data/Ridership/Bus Stop Composite Day")
+setwd(p3)
+bscd <- list.files(pattern=".csv")
+bscd <- bscd %>% map_dfr(read.csv)
 
 ## Write into CSVs for backups
-#setwd("~/GitHub/mbta_bus_ridership_trends/Outputs")
-#write_csv(brdcd, "brdcd.csv")
-#write_csv(brtscd1, "brtscd.csv", append=FALSE)
-#write_csv(brtscd2, "brtscd.csv", append=TRUE)
+p4 = file.path(path, "Outputs")
+setwd(p4)
+write_csv(brdcd, "brdcd.csv")
+write_csv(brtscd1, "brtscd.csv", append=FALSE)
+write_csv(brtscd2, "brtscd.csv", append=TRUE)
 ## merge 2 years content together
-#brtscd <- read.csv("brtscd.csv", na.strings = c("", "NULL"))
-#write_csv(bscd, "bscd.csv")
-#rm(brtscd1, brtscd2)
+brtscd <- read.csv("brtscd.csv", na.strings = c("", "NULL"))
+write_csv(bscd, "bscd.csv")
+
+## clear workspace of variables
+rm(brtscd1, brtscd2, p1, p2, p3, path)
 
 # -------------------------------------------------------------------------- #
 # -------------------------- Required data sets ---------------------------- #
 # -------------------------------------------------------------------------- #
 
-setwd("~/GitHub/mbta_bus_ridership_trends/Outputs")
+setwd(p4)
 brdcd = read.csv("brdcd.csv", na.strings = c("", "NULL"))
 brtscd = read.csv("brtscd.csv", na.strings = c("", "NULL"))
 bscd = read.csv("bscd.csv", na.strings = c("", "NULL"))

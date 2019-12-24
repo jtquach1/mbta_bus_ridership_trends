@@ -1,7 +1,0 @@
-Field,Definition
-GTFS stop_id,GTFS stop_id for the stop
-Stop Name,GTFS stop name for the stop
-Year,"Fiscal Year, e.g. FY2016"
-Day Type,"Weekday, Saturday, or Sunday; holidays are excluded from the data"
-Boardings,"Average daily boardings by fiscal year for each bus stop, and day type"
-Alightings,"Average daily alightings by fiscal year for each bus stop, and day type"

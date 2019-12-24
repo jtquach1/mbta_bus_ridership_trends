@@ -1,6 +1,0 @@
-Field,Definition
-GTFS route_id,GTFS route_id for the bus route
-GTFS direction_id,"0 or 1; typically 0 indicates outbound, 1 indicates inbound"
-Year,"Fiscal Year, e.g. FY2016"
-Day Type,"Weekday, Saturday, or Sunday; holidays are excluded from the data"
-Boardings,"Average daily boardings by fiscal year for each bus route, direction, and day type"
