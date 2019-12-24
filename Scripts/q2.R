@@ -23,6 +23,15 @@ setwd(path)
 p1 = file.path(path, "Data/Ridership/Bus Route Direction Composite Day")
 setwd(p1)
 brdcd <- list.files(pattern=".csv")
+# 2018 data has wrong label for Year and Day Type
+brdcd_2017 = read.csv(brdcd[1])
+brdcd_2018 = read.csv(brdcd[2])
+brdcd_2018 = rename(brdcd_2018, "Year"="Day.Type", "Day.Type"="Year")
+dir.create("temp")
+setwd(file.path(p1, "temp"))
+write_csv(brdcd_2017, "brdcd_2017.csv")
+write_csv(brdcd_2018, "brdcd_2018.csv")
+brdcd <- list.files(pattern=".csv")
 brdcd <- brdcd %>% map_dfr(read.csv)
 
 ## Bus Route Trip Stop Composite Day
@@ -49,7 +58,7 @@ brtscd <- read.csv("brtscd.csv", na.strings = c("", "NULL"))
 write_csv(bscd, "bscd.csv")
 
 ## clear workspace of variables
-rm(brtscd1, brtscd2, p1, p2, p3, path)
+rm(brdcd_2017, brdcd_2018, brtscd1, brtscd2, p1, p2, p3, path)
 
 # -------------------------------------------------------------------------- #
 # -------------------------- Required data sets ---------------------------- #
