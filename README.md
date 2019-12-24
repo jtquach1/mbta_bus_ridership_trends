@@ -1,6 +1,6 @@
 # mbta_bus_ridership_trends
 ## Overview
-This repo illustrates the work I have done in the MATH 345, "Probability and Statistics I", final group project from Fall 2019. The figures were created in R, specifically using the tidyverse package. 
+This repo illustrates the work I have done in the MATH 345, "Probability and Statistics I", final group project from Fall 2019. The figures were created in R, specifically using the tidyverse package. The datasets used were from [MBTA Back on Track](https://mbtabackontrack.com/performance/#/download), gathered on December 2. 
 
 ## Research question
 ### What are the bus ridership trends?
