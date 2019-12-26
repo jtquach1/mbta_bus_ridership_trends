@@ -29,13 +29,13 @@ It is also likely that bus usage on weekends correlates with differing schedules
 Here, we observe the total volume of boardings and alightings given a particular Direction and Time of Day for all bus routes. Time of Day is considered the independent variable, whereas boardings or alightings were considered the dependent variable. Below follows some interesting observations on the data. The by() function was used to get the sum of all ridership values at a given time. This analysis uses the Bus Route Trip Stop Composite Day data. 
 ```R
 ## Get total number of boardings
-avg = by(b$Boardings, 
+total = by(b$Boardings, 
          list(direction = b$GTFS.direction_id, 
               start.time = time_axis, 
               Year = b$Year), FUN = sum, na.rm = TRUE)
 ...
 ## Get total number of alightings
-avg = by(b$Alightings, 
+total = by(b$Alightings, 
          list(direction = b$GTFS.direction_id, 
               start.time = time_axis, 
               Year = b$Year), FUN = sum, na.rm = TRUE)
