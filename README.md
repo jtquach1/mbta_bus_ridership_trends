@@ -1,6 +1,6 @@
 # MBTA Bus Ridership Trends
 ## Overview
-This repo illustrates the work I have done in the MATH 345, "Probability and Statistics I", final group project from Fall 2019. The figures were created in R, specifically using the tidyverse package. The datasets used were from [MBTA Back on Track](https://mbtabackontrack.com/performance/#/download), gathered on December 2. 
+This repo illustrates the work I have done in the MATH 345, "Probability and Statistics I", final group project from Fall 2019. The figures were created in R, specifically using the tidyverse package. The datasets used were from [MBTA Back on Track](https://mbtabackontrack.com/performance/#/download), gathered on December 2. In particular, this work uses the following data: Bus Route Direction Composite Day, Bus Route Trip Stop Composite Day, and Bus Stop Composite Day. 
 
 ## Research question
 ### What are the bus ridership trends?
@@ -8,7 +8,7 @@ Aside from subway and commuter rail usage, the bus is amongst one of the most po
 
 #### How does ridership vary on weekdays versus weekends? 
 ![Average boardings 2017-2018](https://github.com/jtquach1/mbta_bus_ridership_trends/blob/master/Outputs/average_boardings_2017_2018.jpg)
-Here, we observe the average number of boardings given a particular Day Type and Direction for all bus routes. The independent variable was Type of Day and the dependent variable was average boardings. I used aggregate() to get the mean boardings. 
+Here, we observe the average number of boardings given a particular Day Type and Direction for all bus routes. The independent variable was Type of Day and the dependent variable was average boardings. I used aggregate() to get the mean boardings. This analysis uses the Bus Route Direction Composite Day data. 
 ```R
 ## Get average Boardings for each unique Direction, Year, and Day Type
 a_unique = aggregate(
@@ -24,7 +24,7 @@ It is also likely that bus usage on weekends correlates with differing schedules
 #### What are peak ridership times for boardings and alightings? 
 ![Peak times boardings](https://github.com/jtquach1/mbta_bus_ridership_trends/blob/master/Outputs/peak_times_boardings.jpg)
 
-Here, we observe the total volume of boardings and alightings given a particular Direction and Time of Day for all bus routes. Time of Day is considered the independent variable, whereas boardings or alightings were considered the dependent variable. Below follows some interesting observations on the data. The by() function was used to get the sum of all ridership values at a given time. 
+Here, we observe the total volume of boardings and alightings given a particular Direction and Time of Day for all bus routes. Time of Day is considered the independent variable, whereas boardings or alightings were considered the dependent variable. Below follows some interesting observations on the data. The by() function was used to get the sum of all ridership values at a given time. This analysis uses the Bus Route Trip Stop Composite Day data. 
 ```R
 ## Get total number of boardings
 avg = by(b$Boardings, 
@@ -47,7 +47,7 @@ Here follows an analysis on inbound and outbound activity. For outbound activity
 As for the similarity in time frames for inbound and outbound activity, I might deduce that the same stop may have different buses at a given time, so a person may get off a bus and get on a different one. However, whether a person goes inbound or outbound does not necessarily indicate whether they are going to work and going back home, as people may either live far from Boston or close to Boston. I might assume that those who live toward the south must go inbound to get to work, whereas those who live toward the north must go outbound to get to work; inbound and outbound depends on what direction a person is coming from. 
 
 #### What streets and stations are the most popular for boardings and alightings?
-Here, we observe the top 25 most popular streets and stations in terms of average boardings and alightings. The independent variable was the name of each location type and the dependent variable was average boardings or alightings. The purpose of this observation is to get a sense of the busiest locations for any given day, instead of just at rush hour (peak ridership times). This is because the data set used for this subquestion is for that of a composite day rather than for a given time interval and stop. The locations, which were internally represented as “streets” in R, were obtained by taking the first street name out of a stop name with the following format: “STREET 1” separated by an @, OPP, OPPOSITE, and -, next to STREET 2. For instance, “WASHINGTON ST” would be parsed from a string like “WASHINGTON ST OPP RUGGLES ST”. I used additional delimiters to help with merging “duplicate” locations, such as two busways found at the same station. 
+Here, we observe the top 25 most popular streets and stations in terms of average boardings and alightings. The independent variable was the name of each location type and the dependent variable was average boardings or alightings. The purpose of this observation is to get a sense of the busiest locations for any given day, instead of just at rush hour (peak ridership times). This is because the data set used for this subquestion is for that of a composite day rather than for a given time interval and stop. The locations, which were internally represented as “streets” in R, were obtained by taking the first street name out of a stop name with the following format: “STREET 1” separated by an @, OPP, OPPOSITE, and -, next to STREET 2. For instance, “WASHINGTON ST” would be parsed from a string like “WASHINGTON ST OPP RUGGLES ST”. I used additional delimiters to help with merging “duplicate” locations, such as two busways found at the same station. This analysis uses the Bus Stop Composite Day data. 
 
 ```R
 # Get vectors (street1, street2) separated by @,-,OPP,OPPOSITE
