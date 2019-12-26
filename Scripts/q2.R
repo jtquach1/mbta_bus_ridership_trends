@@ -8,53 +8,64 @@
 require(tidyverse)
 require(grid)
 require(gridExtra)
+require(zip)
 
-# -------------------------------------------------------------------------- #
-# ------ Importing Data - Feel free to comment out for replication --------- #
-# -------------------------------------------------------------------------- #
+# --------------------------------------------------------------------------- #
+# -- Importing Data - Comment out if brdcd.csv, brtscd.csv, bscd.csv exist -- #
+# --------------------------------------------------------------------------- #
+## R tips:
+# $ is used to extract elements by name from a named list
+# %>% is used to redirect left side as input to the right side
+# substring(x, first, last)
 
-## $ is used to extract elements by name from a named list
-## %>% is used to redirect left side as input to the right side
-## substring(x, first, last)
-path = "C:/Users/jtqua/OneDrive/Documents/GitHub/mbta_bus_ridership_trends"
-setwd(path)
+#path = "C:/Users/jtqua/OneDrive/Documents/GitHub/mbta_bus_ridership_trends"
+path = "C:/Users/Joyce Quach/Documents/GitHub/mbta_bus_ridership_trends"
 
 ## Bus Route Direction Composite Day
 p1 = file.path(path, "Data/Ridership/Bus Route Direction Composite Day")
 setwd(p1)
+# unzip data
+unzip("Bus_Route_Direction_Composite_Day_FY2017.zip", files="Bus_Route_Direction_Composite_Day_FY2017.csv")
+unzip("Bus_Route_Direction_Composite_Day_FY2018.zip", files="Bus_Route_Direction_Composite_Day_FY2018.csv")
 brdcd <- list.files(pattern=".csv")
 # 2018 data has wrong label for Year and Day Type
 brdcd_2017 = read.csv(brdcd[1])
 brdcd_2018 = read.csv(brdcd[2])
 brdcd_2018 = rename(brdcd_2018, "Year"="Day.Type", "Day.Type"="Year")
-dir.create("temp")
-setwd(file.path(p1, "temp"))
-write_csv(brdcd_2017, "brdcd_2017.csv")
-write_csv(brdcd_2018, "brdcd_2018.csv")
-brdcd <- list.files(pattern=".csv")
-brdcd <- brdcd %>% map_dfr(read.csv)
+brdcd_2018 = brdcd_2018[c("GTFS.route_id", "GTFS.direction_id", "Year", "Day.Type", "Boardings")]
+file.remove("Bus_Route_Direction_Composite_Day_FY2017.csv")
+file.remove("Bus_Route_Direction_Composite_Day_FY2018.csv")
 
 ## Bus Route Trip Stop Composite Day
 p2 = file.path(path, "Data/Ridership/Bus Route Trip Stop Composite Day")
 setwd(p2)
+# unzip data
+unzip("Bus_Route_Trip_Stop_Composite_Day_FY2017.zip", files="Bus_Route_Trip_Stop_Composite_Day_FY2017.csv")
+unzip("Bus_Route_Trip_Stop_Composite_Day_FY2018.zip", files="Bus_Route_Trip_Stop_Composite_Day_FY2018.csv")
 brtscd <- list.files(pattern=".csv")
 brtscd1 <- read.csv(brtscd[1], header=T, fill=T)
 brtscd2 <- read.csv(brtscd[2], header=T, fill=T)
+file.remove("Bus_Route_Trip_Stop_Composite_Day_FY2017.csv")
+file.remove("Bus_Route_Trip_Stop_Composite_Day_FY2018.csv")
 
 ## Bus Stop Composite Day
 p3 = file.path(path, "Data/Ridership/Bus Stop Composite Day")
 setwd(p3)
+unzip("Bus_Stop_Composite_Day_FY2017.zip", files="Bus_Stop_Composite_Day_FY2017.csv")
+unzip("Bus_Stop_Composite_Day_FY2018.zip", files="Bus_Stop_Composite_Day_FY2018.csv")
 bscd <- list.files(pattern=".csv")
 bscd <- bscd %>% map_dfr(read.csv)
+file.remove("Bus_Stop_Composite_Day_FY2017.csv")
+file.remove("Bus_Stop_Composite_Day_FY2018.csv")
 
 ## Write into CSVs for backups
 p4 = file.path(path, "Outputs")
 setwd(p4)
-write_csv(brdcd, "brdcd.csv")
+# combine 2017 and 2018 data
+write_csv(brdcd_2017, "brdcd.csv", append=FALSE)
+write_csv(brdcd_2018, "brdcd.csv", append=TRUE)
 write_csv(brtscd1, "brtscd.csv", append=FALSE)
 write_csv(brtscd2, "brtscd.csv", append=TRUE)
-## merge 2 years content together
-brtscd <- read.csv("brtscd.csv", na.strings = c("", "NULL"))
 write_csv(bscd, "bscd.csv")
 
 ## clear workspace of variables
