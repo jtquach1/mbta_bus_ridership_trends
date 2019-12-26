@@ -156,17 +156,17 @@ time_axis = sapply(time_axis, function(x) x[1]+x[2]/60)
 ##-------------------------------##
 ## Get total number of boardings ##
 ##-------------------------------##
-avg = by(b$Boardings, 
+total = by(b$Boardings, 
          list(direction = b$GTFS.direction_id, 
               start.time = time_axis, 
               Year = b$Year), FUN = sum, na.rm = TRUE)
 
 # Permute dimension in array so that dim1 = time, dim2=direction, dim3=year 
-avg = aperm(avg, c(2,1,3))
+total = aperm(total, c(2,1,3))
 
 # Collapse last 2 dimensions
-dim(avg) = c(dim(avg)[1], prod(dim(avg)[2:3]))
-colnames(avg) = c("out.2017", "in.2017", "out.2018", "in.2018")
+dim(total) = c(dim(total)[1], prod(dim(total)[2:3]))
+colnames(total) = c("out.2017", "in.2017", "out.2018", "in.2018")
 
 # Plot title
 gtitle_1 = c("Total Outbound Boardings in 2017", "Total Inbound Boardings in 2017", 
@@ -176,34 +176,34 @@ gtitle_1 = c("Total Outbound Boardings in 2017", "Total Inbound Boardings in 201
 t = unique(time_axis)
 
 # separate data frames
-boardings = data.frame(t=c(t), out.2017=c(avg[,1]), in.2017=c(avg[,2]), out.2018=c(avg[,3]), in.2018=c(avg[,4]))
+boardings = data.frame(t=c(t), out.2017=c(total[,1]), in.2017=c(total[,2]), out.2018=c(total[,3]), in.2018=c(total[,4]))
 boardings[is.na(boardings)] = 0
 
 ##--------------------------------##
 ## Get total number of alightings ##
 ##--------------------------------##
-avg = by(b$Alightings, 
+total = by(b$Alightings, 
          list(direction = b$GTFS.direction_id, 
               start.time = time_axis, 
               Year = b$Year), FUN = sum, na.rm = TRUE)
 
 # Permute dimension in array so that dim1 = time, dim2=direction, dim3=year 
-avg = aperm(avg, c(2,1,3))
+total = aperm(total, c(2,1,3))
 
 # Collapse last 2 dimensions
-dim(avg) = c(dim(avg)[1], prod(dim(avg)[2:3]))
-colnames(avg) = c("out.2017", "in.2017", "out.2018", "in.2018")
+dim(total) = c(dim(total)[1], prod(dim(total)[2:3]))
+colnames(total) = c("out.2017", "in.2017", "out.2018", "in.2018")
 
 # Plot title
 gtitle_2 = c("Total Outbound Alightings in 2017", "Total Inbound Alightings in 2017", 
            "Total Outbound Alightings in 2018", "Total Inbound Alightings in 2018")
 
 # separate data frames
-alightings = data.frame(t=c(t), out.2017=c(avg[,1]), in.2017=c(avg[,2]), out.2018=c(avg[,3]), in.2018=c(avg[,4]))
+alightings = data.frame(t=c(t), out.2017=c(total[,1]), in.2017=c(total[,2]), out.2018=c(total[,3]), in.2018=c(total[,4]))
 alightings[is.na(alightings)] = 0
 
 ## clear workspace of variables
-rm(avg, b, brtscd, t, time_axis)
+rm(total, b, brtscd, t, time_axis)
 
 ##----------------##
 ## Plot boardings ##
